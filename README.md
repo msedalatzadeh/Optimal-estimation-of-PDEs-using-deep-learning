@@ -7,11 +7,11 @@ Consider a one-dimensional steal bar over the interval <img src="/tex/acf5ce8192
 
 
 The initial temperature is as follows:
-<p align="center"><img src="/tex/d8dfb97b5b9874d7ff4990b0de9d239e.svg?invert_in_darkmode&sanitize=true" align=middle width=429.25320899999997pt height=16.438356pt/></p>
+<p align="center"><img src="/tex/8a5a086cab51d4108f6f351a6d9f3fd2.svg?invert_in_darkmode&sanitize=true" align=middle width=422.86057109999996pt height=16.438356pt/></p>
 
 This temperature profile looks like the following
 
-![Alt text](figs/u0.png "Initial Temperature")
+![Alt text](/figs/u0.png "Initial Temperature")
 
 
 ```python
