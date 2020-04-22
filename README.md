@@ -3,7 +3,7 @@
 Consider a one-dimensional steal bar over the interval <img src="/tex/acf5ce819219b95070be2dbeb8a671e9.svg?invert_in_darkmode&sanitize=true" align=middle width=32.87674994999999pt height=24.65753399999998pt/>.
 
 
-<p align="center"><img src="/tex/d6ad82e98ac57a7bf63ebfdfb39e6d3f.svg?invert_in_darkmode&sanitize=true" align=middle width=479.84657984999996pt height=29.58934275pt/></p>
+<p align="center"><img src="/tex/19b1a58487f907022d41cb15d7b4b6cd.svg?invert_in_darkmode&sanitize=true" align=middle width=446.20697055pt height=49.315569599999996pt/></p>
 
 
 
