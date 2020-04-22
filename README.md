@@ -11,17 +11,13 @@ The initial temperature is as follows:
 
 This temperature profile looks like the following
 
-![alt text](figs/u0.png =50x50)
-
-<img src="figs/u0.png" alt="drawing" width="200"/>
+<img src="figs/u0.png" alt="drawing" width="400"/>
 
 
 ```
 > py forward_sim.py
 ```
 
-![alt text](gifs/temp.gif =50x50)
-
-<img src="gifs/temp.gif" alt="drawing" width="200"/>
+<img src="gifs/temp.gif" alt="drawing" width="400"/>
 
 
