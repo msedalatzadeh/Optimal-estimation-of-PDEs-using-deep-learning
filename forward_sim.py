@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 
 
-dt = 5
+dt = 0.01
 dx = 0.01
-k = 10**(-5)
+k = 0.005
 x_max = 1
-t_max = 1000
+t_max = 10
 u0 = 10
 
 def FTCS(dt,dx,t_max,x_max,k,T0):
@@ -36,7 +36,7 @@ ax = plt.axes(xlim=(0,x_max), ylim=(0,u0))
 line, = ax.plot([], [], lw=2)
 
 plt.xlabel('x')
-plt.ylabel('u(x)')
+plt.ylabel('u(x,t)')
 plt.title('Change in Temperature')
 
 def init():
@@ -49,5 +49,5 @@ def animate(i):
     return line,
 
 
-anim = animation.FuncAnimation(fig, animate, init_func=init,frames=int(t_max/dt), interval=1, blit=True)
+anim = animation.FuncAnimation(fig, animate, init_func=init,frames=10*int(t_max/dt), interval=0.0001, blit=True)
 anim.save("./gifs/temp.gif", writer='imagemagick', fps=30)
