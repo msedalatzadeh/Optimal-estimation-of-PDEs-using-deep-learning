@@ -26,12 +26,12 @@ Consider the following parameteres
 
 |Time increment $dt$|Space discretization $dx$|Final time $t_{max}$|Length of the bar $\ell$|conductivity $k$|Max temperature $u_0$|
 |--------------------|-------------------------|----------------|--------------------------|----------------|-------------------|
-|5                   |  0.01                   |  1000          | 0.01                     | $10^{-5}$      | 10               |
+|0.01               |  0.01             |  10        | 1                    | 0.005     | 10               |
 
 The following function yields solution to the heat equation.
 
 ```python
-FTCS(dt,dx,t_max,x_max,k,T0):
+x,u,r,s = FTCS(dt,dx,t_max,x_max,k,u0)
 ```
 
 Runing the following code solve the equaation.
