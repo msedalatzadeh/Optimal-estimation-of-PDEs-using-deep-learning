@@ -3,7 +3,7 @@
 Consider a one-dimensional steal bar over the interval $[0,1]$.
 
 
-d
+this
 
 
 
