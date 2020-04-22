@@ -21,3 +21,7 @@ This temperature profile looks like the following
 ```
 
 ![alt text](gifs/temp.gif =50x50)
+
+<img src="gifs/temp.gif" alt="drawing" width="200"/>
+
+
