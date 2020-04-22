@@ -14,8 +14,9 @@ This temperature profile looks like the following
 ![alt text](figs/u0.png)
 
 
-```python
+```
 
-![alt text](forward_sim.py)
+> py forward_sim.py
 
 ```
+![Anim](gifs/temp.gif)
