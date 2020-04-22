@@ -18,7 +18,7 @@ u(x,0)=u_0\sin (\pi x).
 
 This temperature profile looks like the following
 
-![alt text](figs/u0.png | width)
+![alt text](figs/u0.png | width=50)
 
 Runing the following code solve the equaation.
 

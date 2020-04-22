@@ -4,7 +4,7 @@ from matplotlib import animation
 
 
 dt = 0.1
-dx = 0.05
+dx = 0.01
 k = 10**(-4)
 x_max = 1
 t_max = 100
@@ -49,5 +49,5 @@ def animate(i):
     return line,
 
 
-anim = animation.FuncAnimation(fig, animate, init_func=init,frames=10*int(t_max/dt), interval=1, blit=True)
+anim = animation.FuncAnimation(fig, animate, init_func=init,frames=int(t_max/dt), interval=1, blit=True)
 anim.save("./gifs/temp.gif", writer='imagemagick', fps=30)
