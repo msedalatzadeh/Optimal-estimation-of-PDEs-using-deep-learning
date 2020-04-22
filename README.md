@@ -17,14 +17,14 @@ This temperature profile looks like the following
 
 Consider the following parameteres
 
-|  Time increment dt | Space discretization dx |Final time t_max| Length of the bar <img src="/tex/d30a65b936d8007addc9c789d5a7ae49.svg?invert_in_darkmode&sanitize=true" align=middle width=6.849367799999992pt height=22.831056599999986pt/> | conductivity k | Max temperature u0|
-|------|-----|------|-------|------|------|
-|5                   |  0.01                   |  1000          | 0.01                     | <img src="/tex/93f74db6de2c14a87dd1265c843fef48.svg?invert_in_darkmode&sanitize=true" align=middle width=57.100465949999986pt height=29.190975000000005pt/>      | 10               |
+|Time increment <img src="/tex/5a8af6f173febd968ef4c52695efcf85.svg?invert_in_darkmode&sanitize=true" align=middle width=14.492060549999989pt height=22.831056599999986pt/>|Space discretization <img src="/tex/74380e4b90b7786c87c490f3d94f2f68.svg?invert_in_darkmode&sanitize=true" align=middle width=17.95095224999999pt height=22.831056599999986pt/>|Final time <img src="/tex/b530365e03efcb672252555f637e9dfb.svg?invert_in_darkmode&sanitize=true" align=middle width=32.18570189999999pt height=20.221802699999984pt/>|Length of the bar <img src="/tex/d30a65b936d8007addc9c789d5a7ae49.svg?invert_in_darkmode&sanitize=true" align=middle width=6.849367799999992pt height=22.831056599999986pt/>|conductivity <img src="/tex/63bb9849783d01d91403bc9a5fea12a2.svg?invert_in_darkmode&sanitize=true" align=middle width=9.075367949999992pt height=22.831056599999986pt/>|Max temperature <img src="/tex/10898c33912164da6714fe6146100886.svg?invert_in_darkmode&sanitize=true" align=middle width=15.96281939999999pt height=14.15524440000002pt/>|
+|--------------------|-------------------------|----------------|--------------------------|----------------|-------------------|
+|0.01               |  0.01             |  10        | 1                    | 0.005     | 10               |
 
 The following function yields solution to the heat equation.
 
 ```python
-FTCS(dt,dx,t_max,x_max,k,T0):
+x,u,r,s = FTCS(dt,dx,t_max,x_max,k,u0)
 ```
 
 Runing the following code solve the equaation.
