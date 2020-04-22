@@ -18,7 +18,9 @@ u(x,0)=u_0\sin (\pi x).
 
 This temperature profile looks like the following
 
-![alt text](figs/u0.png | width=50)
+<p align="center">
+<img src="figs/u0.png" alt="drawing" width="400"/>
+</p>
 
 Runing the following code solve the equaation.
 
@@ -28,4 +30,6 @@ Runing the following code solve the equaation.
 
 The changes in the temperature is according to
 
-![alt text](gifs/temp.gif | width=50)
+<p align="center">
+<img src="gifs/temp.gif" alt="drawing" width="400"/>
+</p>
