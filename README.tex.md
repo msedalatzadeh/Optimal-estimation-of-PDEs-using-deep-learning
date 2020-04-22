@@ -5,7 +5,7 @@ Consider a one-dimensional steal bar over the interval $[0,1]$.
 
 \begin{equation}
 \begin{cases}
-u_{t}=u_{xx},
+u_{t}(x,t)=u_{xx}(x,t),\\
 u_x(0,t)=u_x(1,t)=0.
 \end{cases}
 \end{equation}
