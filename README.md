@@ -11,7 +11,7 @@ The initial temperature is as follows:
 
 This temperature profile looks like the following
 
-![Alt text](/figs/u0.png "Initial Temperature")
+![alt text](figs/u0.png)
 
 
 ```python
