@@ -13,6 +13,8 @@ This temperature profile looks like the following
 
 ![alt text](figs/u0.png =50x50)
 
+<img src="figs/u0.png" alt="drawing" width="200"/>
+
 
 ```
 > py forward_sim.py
