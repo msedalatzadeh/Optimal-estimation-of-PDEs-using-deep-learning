@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 
 
-dt = 0.1
+dt = 5
 dx = 0.01
-k = 10**(-4)
+k = 10**(-5)
 x_max = 1
-t_max = 100
+t_max = 1000
 u0 = 100
 
 def FTCS(dt,dx,t_max,x_max,k,T0):
