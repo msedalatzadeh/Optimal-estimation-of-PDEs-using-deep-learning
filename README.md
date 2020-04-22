@@ -3,6 +3,10 @@
 Consider a one-dimensional steal bar over the interval $[0,1]$.
 
 
+d
+
+
+
 ```python
 
 import numpy as np
