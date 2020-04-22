@@ -18,4 +18,4 @@ This temperature profile looks like the following
 > py forward_sim.py
 ```
 
-![alt text](gifs/temp.gif =50x)
+![alt text](gifs/temp.gif =50x50)
