@@ -11,7 +11,7 @@ The initial temperature is as follows:
 
 This temperature profile looks like the following
 
-![alt text](figs/u0.png)
+![alt text](figs/u0.png =50x50)
 
 
 ```
