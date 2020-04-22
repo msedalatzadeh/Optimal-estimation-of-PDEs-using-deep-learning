@@ -8,7 +8,7 @@ dx = 0.01
 k = 10**(-5)
 x_max = 1
 t_max = 1000
-u0 = 100
+u0 = 10
 
 def FTCS(dt,dx,t_max,x_max,k,T0):
     s = k*dt/dx**2
