@@ -18,7 +18,7 @@ u(x,0)=u_0\sin (\pi x).
 
 This temperature profile looks like the following
 
-![Alt text](/figs/u0.png "Initial Temperature")
+![alt text](figs/u0.png)
 
 
 ```python
