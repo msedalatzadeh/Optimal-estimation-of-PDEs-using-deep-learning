@@ -13,12 +13,12 @@ u_x(0,t)=u_x(1,t)=0.
 
 The initial temperature is as follows:
 \begin{equation}
-u(x,0)=u_0*\sin (\pi x).
+u(x,0)=u_0\sin (\pi x).
 \end{equation}
 
 This temperature profile looks like the following
 
-![Alt text](figs/u0.png "Initial Temperature")
+![Alt text](/figs/u0.png "Initial Temperature")
 
 
 ```python
