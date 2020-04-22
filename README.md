@@ -18,6 +18,7 @@ This temperature profile looks like the following
 Consider the following parameteres
 
 |  Time increment dt | Space discretization dx |Final time t_max| Length of the bar <img src="/tex/d30a65b936d8007addc9c789d5a7ae49.svg?invert_in_darkmode&sanitize=true" align=middle width=6.849367799999992pt height=22.831056599999986pt/> | conductivity k | Max temperature u0|
+|------|-----|------|-------|------|------|
 |5                   |  0.01                   |  1000          | 0.01                     | <img src="/tex/93f74db6de2c14a87dd1265c843fef48.svg?invert_in_darkmode&sanitize=true" align=middle width=57.100465949999986pt height=29.190975000000005pt/>      | 10               |
 
 The following function yields solution to the heat equation.
