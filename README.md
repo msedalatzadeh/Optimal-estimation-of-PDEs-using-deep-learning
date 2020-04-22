@@ -13,17 +13,16 @@ This temperature profile looks like the following
 
 <p align="center">
 <img src="figs/u0.png" alt="drawing" width="400"/>
- </p>
+</p>
 
-
+Runing the following code solve the equaation.
 
 ```
 > py forward_sim.py
 ```
 
+The changes in the temperature is according to
+
 <p align="center">
 <img src="gifs/temp.gif" alt="drawing" width="400"/>
 </p>
-
-
-
