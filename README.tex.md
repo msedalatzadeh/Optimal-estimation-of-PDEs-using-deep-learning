@@ -22,8 +22,7 @@ This temperature profile looks like the following
 
 
 ```
-
 > py forward_sim.py
-
 ```
-![Anim](gifs/temp.gif)
+
+![alt text](gifs/temp.gif)
