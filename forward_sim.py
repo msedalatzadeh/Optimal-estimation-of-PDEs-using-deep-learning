@@ -4,7 +4,7 @@ from matplotlib import animation
 
 
 dt = 0.1
-dx = 0.005
+dx = 0.05
 k = 10**(-4)
 x_max = 1
 t_max = 100

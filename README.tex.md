@@ -18,11 +18,14 @@ u(x,0)=u_0\sin (\pi x).
 
 This temperature profile looks like the following
 
-![alt text](figs/u0.png)
+![alt text](figs/u0.png | width)
 
+Runing the following code solve the equaation.
 
 ```
 > py forward_sim.py
 ```
 
-![alt text](gifs/temp.gif)
+The changes in the temperature is according to
+
+![alt text](gifs/temp.gif | width=50)
