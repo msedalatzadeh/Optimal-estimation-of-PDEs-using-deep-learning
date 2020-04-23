@@ -48,6 +48,7 @@ The changes in the temperature is according to
 
 ## Neural-network estimator
 
+\usepackage{tikz}
 \begin{tikzpicture}
 \draw (0,0) -- (4,0);
 \end{tikzpicture}
