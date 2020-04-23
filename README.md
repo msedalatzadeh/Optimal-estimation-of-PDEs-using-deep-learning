@@ -40,3 +40,5 @@ The changes in the temperature is according to
 </p>
 
 ## Neural-network estimator
+
+<p align="center"><img src="/tex/cc062e44463eda20a852ffe515c85153.svg?invert_in_darkmode&sanitize=true" align=middle width=91.32447389999999pt height=16.438356pt/></p>
