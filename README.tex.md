@@ -1,6 +1,4 @@
 # Optimal Estimation of Temperature Change
-## Forward simulation
-
 Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t$. The changes in the temperature is governed by the equation:
 
 
@@ -17,7 +15,8 @@ The initial temperature is as follows:
 u(x,0)=u_0\sin (\pi x).
 \end{equation}
 
-This temperature profile looks like the following
+## Forward simulation
+The initial temperature profile looks like the following
 
 <p align="center">
 <img src="figs/u0.png" alt="drawing" width="400"/>
@@ -46,3 +45,5 @@ The changes in the temperature is according to
 <p align="center">
 <img src="gifs/temp.gif" alt="drawing" width="400"/>
 </p>
+
+## Neural-network estimator
