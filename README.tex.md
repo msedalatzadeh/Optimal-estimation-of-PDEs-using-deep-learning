@@ -2,21 +2,21 @@
 Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t$. The changes in the temperature is governed by the equation:
 
 
-\begin{equation}
+\begin{equation*}
 \begin{cases}
 u_{t}(x,t)=ku_{xx}(x,t),\\
 u_x(0,t)=u_x(\ell,t)=0.
 \end{cases}
-\end{equation}
+\end{equation*}
 
 
 The initial temperature is as follows:
-\begin{equation}
+\begin{equation*}
 u(x,0)=u_0\sin (\pi x).
-\end{equation}
+\end{equation*}
 
 ## Forward simulation
-The initial temperature profile looks like the following
+A specific initial temperature profile is chosen to run the forward simulation. That is,
 
 <p align="center">
 <img src="figs/u0.png" alt="drawing" width="400"/>
@@ -26,7 +26,7 @@ Consider the following parameteres
 
 |Time increment $dt$|Space discretization $dx$|Final time $t_{max}$|Length of the bar $x_{max}=\ell$|conductivity $k$|Max temperature $u_0$|
 |:------------------:|:-----------------------:|:--------------:|:------------------------:|:--------------:|:-----------------:|
-|         0.01       |            0.01         |       10       |            1             |      0.005     |         10        |
+|         0.1       |            0.01         |       100       |            1            |      0.0003     |         5        |
 
 The following function yields solution to the heat equation.
 
