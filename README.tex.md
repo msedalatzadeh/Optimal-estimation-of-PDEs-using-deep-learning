@@ -47,3 +47,7 @@ The changes in the temperature is according to
 </p>
 
 ## Neural-network estimator
+
+\begin{tikzpicture}
+\draw (0,0) -- (4,0);
+\end{tikzpicture}
