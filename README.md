@@ -1,6 +1,4 @@
 # Optimal Estimation of Temperature Change
-## Forward simulation
-
 Consider a one-dimensional steal bar over the interval <img src="/tex/8250e61c2154c3ca2d3f307958bfd9dd.svg?invert_in_darkmode&sanitize=true" align=middle width=31.50690839999999pt height=24.65753399999998pt/>. Let <img src="/tex/9a1205e73049dcbe49e500982405ce76.svg?invert_in_darkmode&sanitize=true" align=middle width=44.832674699999984pt height=24.65753399999998pt/> be the temperature of the bar at location <img src="/tex/b22db4945452a857d35a63a3f0ea5066.svg?invert_in_darkmode&sanitize=true" align=middle width=62.362875299999985pt height=24.65753399999998pt/> and time <img src="/tex/4f4f4e395762a3af4575de74c019ebb5.svg?invert_in_darkmode&sanitize=true" align=middle width=5.936097749999991pt height=20.221802699999984pt/>. The changes in the temperature is governed by the equation:
 
 
@@ -10,7 +8,8 @@ Consider a one-dimensional steal bar over the interval <img src="/tex/8250e61c21
 The initial temperature is as follows:
 <p align="center"><img src="/tex/8a5a086cab51d4108f6f351a6d9f3fd2.svg?invert_in_darkmode&sanitize=true" align=middle width=422.86057109999996pt height=16.438356pt/></p>
 
-This temperature profile looks like the following
+## Forward simulation
+The initial temperature profile looks like the following
 
 <p align="center">
 <img src="figs/u0.png" alt="drawing" width="400"/>
@@ -39,3 +38,5 @@ The changes in the temperature is according to
 <p align="center">
 <img src="gifs/temp.gif" alt="drawing" width="400"/>
 </p>
+
+## Neural-network estimator
