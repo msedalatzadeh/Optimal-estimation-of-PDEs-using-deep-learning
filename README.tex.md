@@ -25,7 +25,7 @@ This temperature profile looks like the following
 Consider the following parameteres
 
 |Time increment $dt$|Space discretization $dx$|Final time $t_{max}$|Length of the bar $x_{max}=\ell$|conductivity $k$|Max temperature $u_0$|
-|--------------------|-------------------------|----------------|--------------------------|----------------|-------------------|
+|:------------------:|:-----------------------:|:--------------:|:------------------------:|:--------------:|:-----------------:|
 |         0.01       |            0.01         |       10       |            1             |      0.005     |         10        |
 
 The following function yields solution to the heat equation.
