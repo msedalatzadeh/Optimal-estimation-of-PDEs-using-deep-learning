@@ -40,6 +40,16 @@ The changes in the temperature is according to
 </p>
 
 ## Neural-network estimator
+Let the output <img src="/tex/80ff9aeba5bb75eeee655ace1f06ea28.svg?invert_in_darkmode&sanitize=true" align=middle width=44.07160889999999pt height=24.65753399999998pt/> indicate the temperature measured by a sensor in the interval <img src="/tex/357c53fb50db20e1dd55f74ed62e558b.svg?invert_in_darkmode&sanitize=true" align=middle width=49.97722619999999pt height=24.65753399999998pt/>. A set of random initial conditions is fed to the forward simulations to generate the training data. For the time being, we assume <img src="/tex/eda2a562d55167366125e1c21f91e901.svg?invert_in_darkmode&sanitize=true" align=middle width=46.90628744999999pt height=21.18721440000001pt/> and <img src="/tex/4b21b432d676862d1eb707965d12e987.svg?invert_in_darkmode&sanitize=true" align=middle width=46.90628744999999pt height=21.18721440000001pt/>. A sample initial conditions for the training is as follows:
 
-\usepackage{tikz}
-<p align="center"><img src="/tex/cc062e44463eda20a852ffe515c85153.svg?invert_in_darkmode&sanitize=true" align=middle width=91.32447389999999pt height=16.438356pt/></p>
+<p align="center">
+<img src="figs/u0_train.png" alt="drawing" width="400"/>
+</p>
+
+
+The system response to this training sample is as follows and will be collocted.
+
+<p align="center">
+<img src="gifs/temp_train.gif" alt="drawing" width="400"/>
+</p>
+
