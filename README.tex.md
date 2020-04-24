@@ -47,8 +47,16 @@ The changes in the temperature is according to
 </p>
 
 ## Neural-network estimator
+Let the output $y(x,t)$ indicate the temperature measured by a sensor in the interval $[x_1,x_2]$. A set of random initial conditions is fed to the forward simulations to generate the training data. For the time being, we assume $x_1=0$ and $x_2=1$. A sample initial conditions for the training is as follows:
 
-\usepackage{tikz}
-\begin{tikzpicture}
-\draw (0,0) -- (4,0);
-\end{tikzpicture}
+<p align="center">
+<img src="figs/u0_train.png" alt="drawing" width="400"/>
+</p>
+
+
+The system response to this training sample is as follows and will be collocted.
+
+<p align="center">
+<img src="gifs/temp_train.gif" alt="drawing" width="400"/>
+</p>
+
