@@ -3,11 +3,17 @@ import random
 from parameters import *
 import matplotlib.pyplot as plt
 from matplotlib import animation
+from numpy import savez_compressed
 from FTCS import *
 import os
 
 
 m=11  #number of training samples
+
+x = np.arange(0,x_max+dx,dx) 
+t = np.arange(0,t_max+dt,dt)
+r = len(t)
+c = len(x)
 
 input=np.zeros((m,c))
 output=np.zeros((m,r,c))
@@ -19,5 +25,9 @@ for i in range(1,11):
     input[i,:]=u0
     output[i,:,:]=u
   
-np.savetxt('train_data/input.csv',input,delimiter=',')
-np.savetxt('train_data/output.csv',u,delimiter=',')
+
+np.savez_compressed('train_data/input.npz',input)
+np.savez_compressed('train_data/output.npz',output)
+
+np.save('train_data/input.npy',input)
+np.save('train_data/output.npy',output)

@@ -46,7 +46,7 @@ The changes in the temperature is according to
 <img src="gifs/temp.gif" alt="drawing" width="400"/>
 </p>
 
-## Neural-network estimator
+## Estimation using Deep Learning
 Let the output $y(x,t)$ indicate the temperature measured by a sensor in the interval $[x_1,x_2]$. A set of random initial conditions is fed to the forward simulations to generate the training data. For the time being, we assume $x_1=0$ and $x_2=1$. A sample initial conditions for the training is as follows:
 
 <p align="center">
@@ -60,8 +60,28 @@ The system response to this training sample is as follows and will be collocted.
 <img src="gifs/temp_train.gif" alt="drawing" width="400"/>
 </p>
 
-The diagram of the neural-netwrok estimator is shown below
+We use a sequential model in keras library of TensorFlow to estimate the temperature profile. The consitruction of a model has four steps. 
+
+## Model Layers
+First, a sequential model is defined using the comand `tensorflow.keras.Sequential`. Layers are added afterwards one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
+
+````python
+model = Sequential()
+model.add(Dense(32, input_dim=c, activation='relu'))
+model.add(Dense(r*c, activation='relu'))
+model.add(Reshape((r,c)))
+
+plot_model(model, to_file='figs\model_plot.png', show_shapes=True, show_layer_names=True)
+
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
+
+model.fit(input, output, epochs=1, batch_size=m)
+
+u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
+````
+
+The architecture of the model is as follows
 
 <p align="center">
-<img src="figs/model_plot.png" alt="drawing" width="400"/>
+<img src="figs/model_plot.png" alt="drawing" width="200"/>
 </p>
