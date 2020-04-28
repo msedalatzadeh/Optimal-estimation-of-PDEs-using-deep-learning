@@ -55,26 +55,39 @@ The system response to this training sample is as follows and will be collocted.
 
 We use a sequential model in keras library of TensorFlow to estimate the temperature profile. The consitruction of a model has four steps. 
 
-## Model Layers
+## 1. Defining the Layers
 First, a sequential model is defined using the comand `tensorflow.keras.Sequential`. Layers are added afterwards one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
 
-````python
+```python
 model = Sequential()
 model.add(Dense(32, input_dim=c, activation='relu'))
 model.add(Dense(r*c, activation='relu'))
 model.add(Reshape((r,c)))
-
-plot_model(model, to_file='figs\model_plot.png', show_shapes=True, show_layer_names=True)
-
-model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
-
-model.fit(input, output, epochs=1, batch_size=m)
-
-u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
-````
-
+```
 The architecture of the model is as follows
 
 <p align="center">
 <img src="figs/model_plot.png" alt="drawing" width="200"/>
+</p>
+
+## 2. Choosing the Comipiler
+```python
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
+```
+
+## 3. Training the Model
+```python
+model.fit(input, output, epochs=1, batch_size=m)
+```
+
+
+## 4. Making Predictions
+```python
+u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
+```
+
+
+<p align="middle">
+<img src="gifs/temp_pred.gif" alt="drawing" width="200"/>
+<img src="gifs/temp_real.gif" alt="drawing" width="200"/>
 </p>
