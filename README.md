@@ -39,7 +39,7 @@ The changes in the temperature is according to
 <img src="gifs/temp.gif" alt="drawing" width="400"/>
 </p>
 
-## Neural-network estimator
+## Estimation using Deep Learning
 Let the output <img src="/tex/80ff9aeba5bb75eeee655ace1f06ea28.svg?invert_in_darkmode&sanitize=true" align=middle width=44.07160889999999pt height=24.65753399999998pt/> indicate the temperature measured by a sensor in the interval <img src="/tex/357c53fb50db20e1dd55f74ed62e558b.svg?invert_in_darkmode&sanitize=true" align=middle width=49.97722619999999pt height=24.65753399999998pt/>. A set of random initial conditions is fed to the forward simulations to generate the training data. For the time being, we assume <img src="/tex/eda2a562d55167366125e1c21f91e901.svg?invert_in_darkmode&sanitize=true" align=middle width=46.90628744999999pt height=21.18721440000001pt/> and <img src="/tex/4b21b432d676862d1eb707965d12e987.svg?invert_in_darkmode&sanitize=true" align=middle width=46.90628744999999pt height=21.18721440000001pt/>. A sample initial conditions for the training is as follows:
 
 <p align="center">
@@ -53,8 +53,28 @@ The system response to this training sample is as follows and will be collocted.
 <img src="gifs/temp_train.gif" alt="drawing" width="400"/>
 </p>
 
-The diagram of the neural-netwrok estimator is shown below
+We use a sequential model in keras library of TensorFlow to estimate the temperature profile. The consitruction of a model has four steps. 
+
+## Model Layers
+First, a sequential model is defined using the comand `tensorflow.keras.Sequential`. Layers are added afterwards one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
+
+````python
+model = Sequential()
+model.add(Dense(32, input_dim=c, activation='relu'))
+model.add(Dense(r*c, activation='relu'))
+model.add(Reshape((r,c)))
+
+plot_model(model, to_file='figs\model_plot.png', show_shapes=True, show_layer_names=True)
+
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
+
+model.fit(input, output, epochs=1, batch_size=m)
+
+u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
+````
+
+The architecture of the model is as follows
 
 <p align="center">
-<img src="figs/model_plot.png" alt="drawing" width="400"/>
+<img src="figs/model_plot.png" alt="drawing" width="200"/>
 </p>
