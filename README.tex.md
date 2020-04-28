@@ -1,4 +1,4 @@
-# Optimal Estimation Using Neural Network
+# Optimal Estimation using Neural Networks
 Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t$. The changes in the temperature is governed by the equation:
 
 
