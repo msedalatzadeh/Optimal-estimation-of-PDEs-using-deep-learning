@@ -60,3 +60,8 @@ The system response to this training sample is as follows and will be collocted.
 <img src="gifs/temp_train.gif" alt="drawing" width="400"/>
 </p>
 
+The diagram of the neural-netwrok estimator is shown below
+
+<p align="center">
+<img src="figs/model_plot.png" alt="drawing" width="400"/>
+</p>
