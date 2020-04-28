@@ -62,7 +62,7 @@ The system response to this training sample is as follows and will be collocted.
 
 We use a sequential model in keras library of TensorFlow to estimate the temperature profile. The consitruction of a model has four steps. 
 
-## 1. Defining the Layers
+### 1. Defining the Layers
 First, a sequential model is defined using the comand `tensorflow.keras.Sequential`. Layers are added afterwards one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
 
 ```python
@@ -77,18 +77,18 @@ The architecture of the model is as follows
 <img src="figs/model_plot.png" alt="drawing" width="200"/>
 </p>
 
-## 2. Choosing the Comipiler
+### 2. Choosing the Comipiler
 ```python
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 ```
 
-## 3. Training the Model
+### 3. Training the Model
 ```python
 model.fit(input, output, epochs=1, batch_size=m)
 ```
 
 
-## 4. Making Predictions
+### 4. Making Predictions
 ```python
 u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
 ```
