@@ -1,4 +1,4 @@
-# Optimal Estimation using Neural Networks
+# Optimal Estimation of PDEs using Neural Networks and Shape Optimization
 Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t$. The changes in the temperature is governed by the equation:
 
 
@@ -95,6 +95,6 @@ u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
 
 
 <p align="middle">
-<img src="gifs/temp_pred.gif" alt="drawing" width="200"/>
-<img src="gifs/temp_real.gif" alt="drawing" width="200"/>
+<img src="gifs/temp_pred.gif" alt="drawing" width="300"/>
+<img src="gifs/temp_real.gif" alt="drawing" width="300"/>
 </p>

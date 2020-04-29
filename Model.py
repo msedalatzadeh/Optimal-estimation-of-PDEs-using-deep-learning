@@ -30,7 +30,10 @@ model.fit(input, output, epochs=1, batch_size=m)
 u0 = random.choices(range(-u_max, u_max), k=c)
 _,u_real,_,_ = FTCS(dt,dx,t_max,x_max,k,u0)
 
-u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
+u0 = np.asarray(u0).reshape((1,c))
+u_pred = model.predict(u0, batch_size=1)
+eval_result = model.evaluate(u0, u_pred, batch_size=1)
+print('evaluation result' , eval_result)
 
 fig = plt.figure()
 ax = plt.axes(xlim=(0,x_max), ylim=(-u_max,u_max))
