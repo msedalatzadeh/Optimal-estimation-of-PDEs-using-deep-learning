@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import ffmpy
 from matplotlib import animation
 from numpy import load, array, zeros, reshape, cos, pi, arange, append
 from parameters import *
@@ -64,3 +65,5 @@ anim = animation.FuncAnimation(fig,lambda i: animate(i,dt), init_func=init,frame
 #anim.save('./gifs/real-solution.gif', writer='imagemagick', fps=30)
 # anim.save('./mp4s/real-solution.mp4', writer = PillowWriter, fps=30)
 anim.save('./mp4s/real-prediction-selu-Adam-mean_squared_error.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+ff = ffmpy.FFmpeg(inputs = {'mp4s/real-prediction-selu-Adam-mean_squared_logarithmic_error.mp4':None} , outputs = {'gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif': None})
+ff.run()
