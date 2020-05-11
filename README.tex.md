@@ -134,7 +134,7 @@ u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
 ### Choice of activation function
 |`elu`|`tanh`|`relu`|
 |-----|------|------|
-|<img src="gifs/real-prediction-elu.gif" width="400" />|<img src="gifs/real-prediction-tanh.gif" width="400" />|<img src="gifs/real-prediction-relu.gifs" width="400" />|
+|<img src="gifs/real-prediction-elu.gif" width="400" />|<img src="gifs/real-prediction-tanh.gif" width="400" />|<img src="gifs/real-prediction-relu.gif" width="400" />|
 
 ### Choice of optimizer
 The activation function is fixed to `selu`.
