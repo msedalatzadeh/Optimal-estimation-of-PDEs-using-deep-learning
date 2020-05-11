@@ -34,7 +34,10 @@ For the specified parameters and the following initial condition $u(x,0)=u_0\sin
 >> .\forward_sim.py
 ```
 The output for these parameters is 
-![](gifs/forward-sim.gif)
+
+<p align="center">
+<img src="gifs/forward-sim.gif" width="400" />
+</p>
 
 ## Neural-Network Estimator
 A neural-network estimator is trained from some set of initial conditions to estimate the solution of the heat equation for any arbitrary initial condition. The set of initial conditions selected for training is
@@ -131,21 +134,39 @@ u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
 ### Choice of activation function
 |`elu`|`tanh`|`relu`|
 |-----|------|------|
-|![](gifs/real-prediction-elu.gif)|![](gifs/real-prediction-tanh.gif)|![](gifs/real-prediction-relu.gifs)
+|<p align="center">
+<img src="gifs/real-prediction-elu.gif" width="400" />
+</p>|<p align="center">
+<img src="gifs/real-prediction-tanh.gif" width="400" />
+</p>|<p align="center">
+<img src="gifs/real-prediction-relu.gifs" width="400" />
+</p>|
 
 ### Choice of optimizer
 The activation function is fixed to `selu`.
 
 |`Adadelta`|`SGD`|`RMSprop`|
 |-----|------|------|
-|![](gifs/real-prediction-selu-Adadelta.gif)|![](gifs/real-prediction-selu-SGD.gif)|![](gifs/real-prediction-selu-RMSprop.gif)
+|<p align="center">
+<img src="gifs/real-prediction-selu-Adadelta.gif" width="400" />
+</p>|<p align="center">
+<img src="gifs/real-prediction-selu-SGD.gif" width="400" />
+</p>|<p align="center">
+<img src="gifs/real-prediction-selu-RMSprop.gif" width="400" />
+</p>|
 
 ### Choice of loss function
 The activation function and optimizer are fixed to `selu` and `Adam`, respectively.
 
 |`mean_squared_error`|`huber_loss`|`mean_squared_logarithmic_error`|
 |-----|------|------|
-|![](gifs/real-prediction-selu-Adam-mean_squared_error.gif)|![](gifs/real-prediction-selu-Adam-huber_loss.gif)|![](gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif)
+|<p align="center">
+<img src="gifs/real-prediction-selu-Adam-mean_squared_error.gif" width="400" />
+</p>|<p align="center">
+<img src="gifs/real-prediction-selu-Adam-huber_loss.gif" width="400" />
+</p>|<p align="center">
+<img src="gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif" width="400" />
+</p>|
 
 
 ## Shape Optimization
