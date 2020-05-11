@@ -28,7 +28,7 @@ For the specified parameters and the following initial condition <img src="/tex/
 >> .\forward_sim.py
 ```
 The output for these parameters is 
-![](gifs/forward-sim.gif)
+![](gifs/forward-sim.gif | width = 40)
 
 ## Neural-Network Estimator
 A neural-network estimator is trained from some set of initial conditions to estimate the solution of the heat equation for any arbitrary initial condition. The set of initial conditions selected for training is
