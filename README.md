@@ -120,13 +120,7 @@ u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
 ### Choice of activation function
 |`elu`|`tanh`|`relu`|
 |-----|------|------|
-|<p align="center">
-<img src="gifs/real-prediction-elu.gif" width="400" />
-</p>|<p align="center">
-<img src="gifs/real-prediction-tanh.gif" width="400" />
-</p>|<p align="center">
-<img src="gifs/real-prediction-relu.gifs" width="400" />
-</p>|
+|<img src="gifs/real-prediction-elu.gif" width="400" />|<img src="gifs/real-prediction-tanh.gif" width="400" />|<img src="gifs/real-prediction-relu.gifs" width="400" />|
 
 ### Choice of optimizer
 The activation function is fixed to `selu`.
@@ -140,13 +134,7 @@ The activation function and optimizer are fixed to `selu` and `Adam`, respective
 
 |`mean_squared_error`|`huber_loss`|`mean_squared_logarithmic_error`|
 |-----|------|------|
-|<p align="center">
-<img src="gifs/real-prediction-selu-Adam-mean_squared_error.gif" width="400" />
-</p>|<p align="center">
-<img src="gifs/real-prediction-selu-Adam-huber_loss.gif" width="400" />
-</p>|<p align="center">
-<img src="gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif" width="400" />
-</p>|
+|<img src="gifs/real-prediction-selu-Adam-mean_squared_error.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-huber_loss.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif" width="400" />|
 
 
 ## Shape Optimization
