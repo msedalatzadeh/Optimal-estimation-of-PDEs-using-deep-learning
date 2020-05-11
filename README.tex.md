@@ -147,13 +147,7 @@ The activation function is fixed to `selu`.
 
 |`Adadelta`|`SGD`|`RMSprop`|
 |-----|------|------|
-|<p align="center">
-<img src="gifs/real-prediction-selu-Adadelta.gif" width="400" />
-</p>|<p align="center">
-<img src="gifs/real-prediction-selu-SGD.gif" width="400" />
-</p>|<p align="center">
-<img src="gifs/real-prediction-selu-RMSprop.gif" width="400" />
-</p>|
+|<img src="gifs/real-prediction-selu-Adadelta.gif" width="400" />|<img src="gifs/real-prediction-selu-SGD.gif" width="400" />|<img src="gifs/real-prediction-selu-RMSprop.gif" width="400" />|
 
 ### Choice of loss function
 The activation function and optimizer are fixed to `selu` and `Adam`, respectively.
