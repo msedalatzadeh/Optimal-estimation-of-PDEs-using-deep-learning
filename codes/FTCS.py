@@ -15,4 +15,4 @@ def FTCS(dt,dx,t_max,x_max,k,u0):
         u[n+1, j] = u[n,j] + s*(u[n,j-1] - 2*u[n,j] + u[n,j-1])
         j = 0
         u[n+1, j] = u[n,j] + s*(u[n,j+1] - 2*u[n,j] + u[n,j+1])
-    return x,u,r,s
+    return u

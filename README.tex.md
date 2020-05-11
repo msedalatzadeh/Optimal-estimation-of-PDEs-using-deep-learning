@@ -1,100 +1,145 @@
-# Optimal Estimation of PDEs using Neural Networks and Shape Optimization
-Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t$. The changes in the temperature is governed by the equation:
+# Optimal Estimation using Neural-Networks and Shape Optimization
+This repository contains codes and reuslts for optimal estimation of heat equation by means of shape optimization and neural networks. Consider a one-dimensional steal bar over the interval $`[0,\ell]`$. Let $`u(x,t)`$ be the temperature of the bar at location $`x\in [0,1]`$ and time $`t>0`$. The changes in the temperature is governed by the equation:
 
 
-\begin{equation*}
-\begin{cases}
+```math
 u_{t}(x,t)=ku_{xx}(x,t),\\
-u_x(0,t)=u_x(\ell,t)=0.
-\end{cases}
-\end{equation*}
+u_x(0,t)=u_x(\ell,t)=0,\\
+u(x,0)=u_0(x).
+```
 
-
-The initial temperature is as follows:
-\begin{equation*}
-u(x,0)=u_0\sin (\pi x).
-\end{equation*}
 
 ## Forward simulation
-A specific initial temperature profile is chosen to run the forward simulation. That is,
+Forward simulation involves a function that gives the output to the model given the inputs. For our specific example, the inputs are an initial temperature profile $`u(x,0)`$ and a sensor shape set $`\omega\subset [0,1]`$. The output $`y(x,t)`$ is the temperature measured by a sensor in the set $`\omega`$; that is, $`y(x,t)=\chi_\omega u(x,t)`$. 
 
-<p align="center">
-<img src="figs/u0.png" alt="drawing" width="400"/>
-</p>
+ There are various methods to solve the heat equation and find the solution $`u(x,t)`$ for every initial condition. We use forward-time central-space finite-difference discretization method to find the solution of the heat equation. The following Python function is created that yields the solution
 
-Consider the following parameteres
-
-|Time increment $dt$|Space discretization $dx$|Final time $t_{max}$|Length of the bar $x_{max}=\ell$|conductivity $k$|Max temperature $u_0$|
-|:------------------:|:-----------------------:|:--------------:|:------------------------:|:--------------:|:-----------------:|
-|         0.1       |            0.01         |       100       |            1            |      0.0003     |         5        |
-
-The following function yields solution to the heat equation.
 
 ```python
-x,u,r,s = FTCS(dt,dx,t_max,x_max,k,u0)
+u = FTCS(dt,dx,t_max,x_max,k,u0)
 ```
 
-Runing the following code solve the equaation.
 
+The parameters of the function are defined below.
+
+|Time increment: $`dt`$|Space discretization: $`dx`$|Final time: $`t_{max}`$|Length of the bar: $`x_{max}=\ell`$|conductivity: $`k`$|
+|:------------------:|:-----------------------:|:--------------:|:------------------------:|:--------------:|
+|         0.1       |            0.01         |       100       |            1            |      0.0003     |
+
+For the specified parameters and the following initial condition $`u(x,0)=u_0\sin (\pi x)`$, the solution is obtained by running the code
+
+```cmd
+>> .\forward_sim.py
 ```
-> py forward_sim.py
+The output for these parameters is 
+![](mp4s/forward-sim.mp4)
+
+## Neural-Network Estimator
+A neural-network estimator is trained from some set of initial conditions to estimate the solution of the heat equation for any arbitrary initial condition. The set of initial conditions selected for training is
+
+```math
+u_0(x)=16x^2(x-1)^2\sin(pi\omegax)
 ```
 
-The changes in the temperature is according to
+where $`\omega`$ is changed from `1` to `N` to create new training sample. 
 
-<p align="center">
-<img src="gifs/temp.gif" alt="drawing" width="400"/>
-</p>
+Training data are stored in `input.npy`. The input is an array with the shape `(m,c+1)` where `m=N*r` is the number of training data. In each column, an initial condition is followed by a number indicating a time at which the output is calculated.  The output is an array stored in `output.npy`. Let `u` be the solution to the heat equation with initial condition `u0` at time `t[s]`.
 
-## Estimation using Deep Learning
-Let the output $y(x,t)$ indicate the temperature measured by a sensor in the interval $[x_1,x_2]$. A set of random initial conditions is fed to the forward simulations to generate the training data. For the time being, we assume $x_1=0$ and $x_2=1$. A sample initial conditions for the training is as follows:
+```python
+input = zeros((m,c+1))
+output = zeros((m,c))
 
-<p align="center">
-<img src="figs/u0_train.png" alt="drawing" width="400"/>
-</p>
+def IC(x,omega,u_max):
+    u = 16*u_max*(x**2)*((x-1)**2)*sin(omega*pi*x)
+    return u
 
+n=0
+for omega in range(1,N+1):
+    u0 = array([IC(x,omega,u_max) for x in X])
+    u = FTCS(dt, dx, t_max, x_max, k, u0)
+    for s in range(0,r):
+        input[n,0:c] = u0
+        input[n,c] = t[s] 
+        output[n,:] = u[s,:]
+        n = n+1
+```
 
-The system response to this training sample is as follows and will be collocted.
-
-<p align="center">
-<img src="gifs/temp_train.gif" alt="drawing" width="400"/>
-</p>
-
-We use a sequential model in keras library of TensorFlow to estimate the temperature profile. The consitruction of a model has four steps. 
+We use a sequential model in Keras library of TensorFlow to build an estimator. The estimator is indicated by `model` and is consitruced in four steps as follows. 
 
 ### 1. Defining the Layers
 First, a sequential model is defined using the comand `tensorflow.keras.Sequential`. Layers are added afterwards one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
 
 ```python
 model = Sequential()
-model.add(Dense(32, input_dim=c, activation='relu'))
-model.add(Dense(r*c, activation='relu'))
-model.add(Reshape((r,c)))
+model.add(Dense(100, input_dim = c1, activation='tanh'))
+model.add(Dense(500, activation='tanh'))
+model.add(Dense(1000, activation='tanh'))
+model.add(Dense(500, activation='tanh'))
+model.add(Dense(c, activation='tanh'))
 ```
 The architecture of the model is as follows
 
 <p align="center">
-<img src="figs/model_plot.png" alt="drawing" width="200"/>
+<img src="figs/model-plot.png" alt="drawing" width="300"/>
 </p>
+An activation function can be chosen in each layer. In what follows, we will compare the following activation functions: 
+
+Exponential Linear Unit activation function: `elu`
+
+```math
+x   \quad if \; x>0,\\
+\alpha (e^x-1) \quad if \; x<0.
+```
+
+Hyperbolic Tangent activation function `tanh`.
 
 ### 2. Choosing the Comipiler
+Optimization method, loss function, and performance metrics are chosen in this step.
 ```python
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 ```
 
 ### 3. Training the Model
+Sample data are fed to the model to train it. The data are divided into epochs and each spoch is further divided into batches.
+
 ```python
 model.fit(input, output, epochs=1, batch_size=m)
 ```
 
 
-### 4. Making Predictions
+### 4. Evaluating the Performance
+We use some test data to evaluate the performance of the trained model. This includes feeding some sample input and output to the model and calculate the loss and performance metric.
+
+```python
+eval_result = model.evaluate(u0, u_real.reshape((1,c,r)), batch_size=1)
+print('evaluation result, [loss, accuracy]=' , eval_result)
+```
+
+## Estimation (i.e. Making Predictions)
+For the time being, we assume $`x_1=0`$ and $`x_2=1`$. Estimation is
+
 ```python
 u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
 ```
 
+### Choice of activation function
+|`elu`|`tanh`|`relu`|
+|-----|------|------|
+|![](mp4s/real-prediction-elu.mp4)|![](mp4s/real-prediction-tanh.mp4)|![](mp4s/real-prediction-relu.mp4)
 
-<p align="middle">
-<img src="gifs/temp_pred.gif" alt="drawing" width="300"/>
-<img src="gifs/temp_real.gif" alt="drawing" width="300"/>
-</p>
+### Choice of optimizer
+The activation function is fixed to `selu`.
+
+|`Adadelta`|`SGD`|`RMSprop`|
+|-----|------|------|
+|![](mp4s/real-prediction-selu-Adadelta.mp4)|![](mp4s/real-prediction-selu-SGD.mp4)|![](mp4s/real-prediction-selu-RMSprop.mp4)
+
+### Choice of loss function
+The activation function and optimizer are fixed to `selu` and `Adam`, respectively.
+
+|`mean_squared_error`|`huber_loss`|`mean_squared_logarithmic_error`|
+|-----|------|------|
+|![](mp4s/real-prediction-selu-Adam-mean_squared_error.mp4)|![](mp4s/real-prediction-selu-Adam-huber_loss.mp4)|![](mp4s/real-prediction-selu-Adam-mean_squared_logarithmic_error.mp4)
+
+
+## Shape Optimization
