@@ -1,4 +1,4 @@
-# Optimal Estimation using Neural-Networks and Shape Optimization
+# Optimal Estimation using Deep Learning and Shape Optimization
 This repository contains codes and results for optimal estimation of heat equation by means of shape optimization and neural networks. Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t>0$. The changes in the temperature is governed by the equation:
 
 
@@ -41,7 +41,7 @@ A neural-network estimator is trained from some set of initial conditions to est
 
 \begin{equation}
 \begin{cases}
-u_0(x)=16x^2(x-1)^2\sin(pi\omegax)
+u_0(x)=16x^2(x-1)^2\sin(pi\omega x)
 \end{cases}
 \end{equation}
 
