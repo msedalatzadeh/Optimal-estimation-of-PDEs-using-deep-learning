@@ -200,4 +200,7 @@ The response of the model trained with random initial conditions are shown in th
 |<img src="gifs/IC1-random_data.gif" width="400" />|<img src="gifs/IC2-random_data.gif" width="400" />|<img src="gifs/IC3-random_data.gif" width="400" />|
 
 
+
+
+
 ## Shape Optimization
