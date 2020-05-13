@@ -151,4 +151,53 @@ The activation function and optimizer are fixed to `selu` and `Adam`, respective
 |<img src="gifs/real-prediction-selu-Adam-mean_squared_error.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-huber_loss.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif" width="400" />|
 
 
+
+### Changing Initial Conditions 
+For the activation function `selu`, optimizer `Adam`, loss function `huber_loss`, different initial conditions are tested to observe the performance of the estimator.
+
+|$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
+|-----|------|------|
+|<img src="gifs/IC1.gif" width="400" />|<img src="gifs/IC2.gif" width="400" />|<img src="gifs/IC3.gif" width="400" />|
+
+### Random Training Data
+We also use random initial conditions to train the model. The random training data includes initial conditions generated with the following code
+
+```python
+# Random Initial Conditions
+from random import sample, choices
+m = N*r    # number of input data
+input = zeros((m,c+1))
+output = zeros((m,c))
+
+m = int(x_max/dx/5)
+n = 0
+for itr in range(0,N):
+    rand_location = sample(range(2,c-2), k = m)
+    rand_temperature = choices(list(chain(range(-u_max, 0), range(1, u_max+1))), k = m)
+
+    u0 = zeros(c+1)
+    for i in range(0,m):
+        u0[rand_location[i]] = rand_temperature[i]
+
+    plt.plot(X, u0[0:c])
+    u = FTCS(dt, dx, t_max, x_max, k, u0[0:c])
+    for s in range(0,r):
+        u0[c] = t[s]
+        input[n,:] = u0
+        output[n,:] = u[s,:]
+        n = n+1
+```
+These initial conditions are depicted in the next figure
+
+<p align="center">
+<img src="figs/training-u0-random.png" width="400" />
+</p>
+
+The response of the model trained with random initial conditions are shown in the next table
+
+|$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
+|-----|------|------|
+|<img src="gifs/IC1-random_data.gif" width="400" />|<img src="gifs/IC2-random_data.gif" width="400" />|<img src="gifs/IC3-random_data.gif" width="400" />|
+
+
 ## Shape Optimization
