@@ -1,18 +1,20 @@
 # Optimal Estimation using Neural-Networks and Shape Optimization
-This repository contains codes and reuslts for optimal estimation of heat equation by means of shape optimization and neural networks. Consider a one-dimensional steal bar over the interval $`[0,\ell]`$. Let $`u(x,t)`$ be the temperature of the bar at location $`x\in [0,1]`$ and time $`t>0`$. The changes in the temperature is governed by the equation:
+This repository contains codes and reuslts for optimal estimation of heat equation by means of shape optimization and neural networks. Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t>0$. The changes in the temperature is governed by the equation:
 
 
-```math
+\begin{equation}
+\begin{cases}
 u_{t}(x,t)=ku_{xx}(x,t),\\
 u_x(0,t)=u_x(\ell,t)=0,\\
 u(x,0)=u_0(x).
-```
+\end{cases}
+\end{equation}
 
 
 ## Forward simulation
-Forward simulation involves a function that gives the output to the model given the inputs. For our specific example, the inputs are an initial temperature profile $`u(x,0)`$ and a sensor shape set $`\omega\subset [0,1]`$. The output $`y(x,t)`$ is the temperature measured by a sensor in the set $`\omega`$; that is, $`y(x,t)=\chi_\omega u(x,t)`$. 
+Forward simulation involves a function that gives the output to the model given the inputs. For our specific example, the inputs are an initial temperature profile $u(x,0)$ and a sensor shape set $\omega\subset [0,1]$. The output $y(x,t)$ is the temperature measured by a sensor in the set $\omega$; that is, $y(x,t)=\chi_\omega u(x,t)$. 
 
- There are various methods to solve the heat equation and find the solution $`u(x,t)`$ for every initial condition. We use forward-time central-space finite-difference discretization method to find the solution of the heat equation. The following Python function is created that yields the solution
+ There are various methods to solve the heat equation and find the solution $u(x,t)$ for every initial condition. We use forward-time central-space finite-difference discretization method to find the solution of the heat equation. The following Python function is created that yields the solution
 
 
 ```python
@@ -22,11 +24,11 @@ u = FTCS(dt,dx,t_max,x_max,k,u0)
 
 The parameters of the function are defined below.
 
-|Time increment: $`dt`$|Space discretization: $`dx`$|Final time: $`t_{max}`$|Length of the bar: $`x_{max}=\ell`$|conductivity: $`k`$|
+|Time increment: $dt$|Space discretization: $dx$|Final time: $t_{max}$|Length of the bar: $x_{max}=\ell$|conductivity: $k$|
 |:------------------:|:-----------------------:|:--------------:|:------------------------:|:--------------:|
 |         0.1       |            0.01         |       100       |            1            |      0.0003     |
 
-For the specified parameters and the following initial condition $`u(x,0)=u_0\sin (\pi x)`$, the solution is obtained by running the code
+For the specified parameters and the following initial condition $u(x,0)=u_0\sin (\pi x)$, the solution is obtained by running the code
 
 ```cmd
 >> .\forward_sim.py
@@ -40,11 +42,11 @@ The output for these parameters is
 ## Neural-Network Estimator
 A neural-network estimator is trained from some set of initial conditions to estimate the solution of the heat equation for any arbitrary initial condition. The set of initial conditions selected for training is
 
-```math
+$$
 u_0(x)=16x^2(x-1)^2\sin(\pi\omega x)
-```
+$$
 
-where $`\omega`$ is changed from `1` to `N` to create new training sample. 
+where $\omega$ is changed from `1` to `N` to create new training sample. 
 
 Training data are stored in `input.npy`. The input is an array with the shape `(m,c+1)` where `m=N*r` is the number of training data. In each column, an initial condition is followed by a number indicating a time at which the output is calculated.  The output is an array stored in `output.npy`. Let `u` be the solution to the heat equation with initial condition `u0` at time `t[s]`.
 
@@ -113,7 +115,7 @@ print('evaluation result, [loss, accuracy]=' , eval_result)
 ```
 
 ## Estimation (i.e. Making Predictions)
-For the time being, we assume $`x_1=0`$ and $`x_2=1`$. Estimation is
+For the time being, we assume $x_1=0$ and $x_2=1$. Estimation is
 
 ```python
 u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
@@ -143,7 +145,7 @@ The activation function and optimizer are fixed to `selu` and `Adam`, respective
 ### Changing Initial Conditions 
 For the activation function `selu`, optimizer `Adam`, loss function `huber_loss`, different initial conditions are tested to observe the performance of the estimator.
 
-|$`u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2`$|$`u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2`$|$`u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2`$|
+|$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
 |-----|------|------|
 |<img src="mp4s/IC1.mp4" width="400" />|<img src="mp4s/IC2.mp4" width="400" />|<img src="mp4s/IC3.mp4" width="400" />|
 
@@ -183,7 +185,7 @@ These initial conditions are depicted in the next figure
 
 The response of the model trained with random initial conditions are shown in the next table
 
-|$`u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2`$|$`u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2`$|$`u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2`$|
+|$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
 |-----|------|------|
 |<img src="mp4s/IC1-random_data.mp4" width="400" />|<img src="mp4s/IC2-random_data.mp4" width="400" />|<img src="mp4s/IC3-random_data.mp4" width="400" />|
 
@@ -225,4 +227,4 @@ The following is the simulation result for a CNN predictor
 <img src="mp4s/IC1-test_type3-25modes.mp4" width="400" />
 
 ## Shape Optimization
-In this section, the input to the estimator will only be an initial condition over a subset $`\omega \subset [0,1]`$ 
+In this section, the input to the estimator will only be an initial condition over a subset $\omega \subset [0,1]$ 
