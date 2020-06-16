@@ -36,7 +36,7 @@ For the specified parameters and the following initial condition $u(x,0)=u_0\sin
 The output for these parameters is 
 
 <p align="center">
-<img src="mp4s/forward-sim.mp4" width="400" />
+<img src="gifs/forward-sim.gif" width="400" />
 </p>
 
 ## Neural-Network Estimator
@@ -126,28 +126,28 @@ An activation function can be chosen in each layer. An activation function shoul
 
 |`elu`|`tanh`|`relu`|
 |-----|------|------|
-|<img src="mp4s/real-prediction-elu.mp4" width="400" />|<img src="mp4s/real-prediction-tanh.mp4" width="400" />|<img src="mp4s/real-prediction-relu.mp4" width="400" />|
+|<img src="gifs/real-prediction-elu.gif" width="400" />|<img src="gifs/real-prediction-tanh.gif" width="400" />|<img src="gifs/real-prediction-relu.gif" width="400" />|
 
 ### Choice of optimizer
 The activation function is fixed to `selu`.
 
 |`Adadelta`|`SGD`|`RMSprop`|
 |-----|------|------|
-|<img src="mp4s/real-prediction-selu-Adadelta.mp4" width="400" />|<img src="mp4s/real-prediction-selu-SGD.mp4" width="400" />|<img src="mp4s/real-prediction-selu-RMSprop.mp4" width="400" />|
+|<img src="gifs/real-prediction-selu-Adadelta.gif" width="400" />|<img src="gifs/real-prediction-selu-SGD.gif" width="400" />|<img src="gifs/real-prediction-selu-RMSprop.gif" width="400" />|
 
 ### Choice of loss function
 The activation function and optimizer are fixed to `selu` and `Adam`, respectively.
 
 |`mean_squared_error`|`huber_loss`|`mean_squared_logarithmic_error`|
 |-----|------|------|
-|<img src="mp4s/real-prediction-selu-Adam-mean_squared_error.mp4" width="400" />|<img src="mp4s/real-prediction-selu-Adam-huber_loss.mp4" width="400" />|<img src="mp4s/real-prediction-selu-Adam-mean_squared_logarithmic_error.mp4" width="400" />|
+|<img src="gifs/real-prediction-selu-Adam-mean_squared_error.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-huber_loss.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif" width="400" />|
 
 ### Changing Initial Conditions 
 For the activation function `selu`, optimizer `Adam`, loss function `huber_loss`, different initial conditions are tested to observe the performance of the estimator.
 
 |$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
 |-----|------|------|
-|<img src="mp4s/IC1.mp4" width="400" />|<img src="mp4s/IC2.mp4" width="400" />|<img src="mp4s/IC3.mp4" width="400" />|
+|<img src="gifs/IC1.gif" width="400" />|<img src="gifs/IC2.gif" width="400" />|<img src="gifs/IC3.gif" width="400" />|
 
 ### Random Training Data
 We also use random initial conditions to train the model. The random training data includes initial conditions generated with the following code
@@ -187,7 +187,7 @@ The response of the model trained with random initial conditions are shown in th
 
 |$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
 |-----|------|------|
-|<img src="mp4s/IC1-random_data.mp4" width="400" />|<img src="mp4s/IC2-random_data.mp4" width="400" />|<img src="mp4s/IC3-random_data.mp4" width="400" />|
+|<img src="gifs/IC1-random_data.gif" width="400" />|<img src="gifs/IC2-random_data.gif" width="400" />|<img src="gifs/IC3-random_data.gif" width="400" />|
 
 ## RNN Layer
 An RNN layer is a recurrent neural network in which the output is fed back to the network. A schematic of the network is depicted below
@@ -206,7 +206,7 @@ model = Sequential([
 
 The following is the simulation result for an RNN predictor
 
-<img src="mp4s/IC1-test_type4-25modes.mp4" width="400" />
+<img src="gifs/IC1-test_type4-25modes.gif" width="400" />
 
 ## CNN Layer
 A CNN layer applies various filters to a time series and yields a time series width shorter with depending on the size of its filter. A schematic of the network is depicted below
@@ -224,7 +224,7 @@ model = Sequential([
 ```
 The following is the simulation result for a CNN predictor
 
-<img src="mp4s/IC1-test_type3-25modes.mp4" width="400" />
+<img src="gifs/IC1-test_type3-25modes.gif" width="400" />
 
 ## Shape Optimization
 In this section, the input to the estimator will only be an initial condition over a subset $\omega \subset [0,1]$ 
