@@ -206,7 +206,9 @@ model = Sequential([
 
 The following is the simulation result for an RNN predictor
 
+<p align="center">
 <img src="gifs/IC1-test_type4-36modes.gif" width="400" />
+</p>
 
 ## CNN Layer
 A CNN layer applies various filters to a time series and yields a time series width shorter with depending on the size of its filter. A schematic of the network is depicted below
@@ -224,7 +226,9 @@ model = Sequential([
 ```
 The following is the simulation result for a CNN predictor
 
+<p align="center">
 <img src="gifs/IC1-test_type3-5modes.gif" width="400" />
+</p>
 
 ## Shape Optimization
 In this section, the input to the estimator will only be an initial condition over a subset $\omega \subset [0,1]$ 
