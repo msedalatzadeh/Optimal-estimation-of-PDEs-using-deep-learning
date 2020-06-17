@@ -1,4 +1,4 @@
-# Optimal Predictor Design using Neural-Networks and Shape Optimization
+# Optimal Predictor Design
 This repository contains codes and reuslts for optimal estimation of heat equation by means of shape optimization and neural networks. Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t>0$. The changes in the temperature is governed by the equation:
 
 
