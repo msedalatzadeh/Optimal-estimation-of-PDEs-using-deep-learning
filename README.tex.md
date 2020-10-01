@@ -1,4 +1,4 @@
-# Optimal Estimator Desgin
+# Optimal Predictor Desgin
 This repository contains codes and results for optimal estimation of heat equation by means of shape optimization and neural networks. 
 
 Consider a one-dimensional heat-conductive bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t>0$. The changes in the temperature is governed by the equation:
