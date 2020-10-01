@@ -256,4 +256,4 @@ Use the function `animate(u_real,model,omega,FileName)` to illustrate the perfor
 
 |  Time evolution when $\omega_0$ is random | Time evolution when $\omega_0$ is zero array|
 |----------------|---------------------|
-|<img src="gifs/animate_step_iteration_100_alpha_300_random.gif" width="400" />|<img src="gifs/animate_step_iteration_100_alpha_300_zero.gif" width="400" />|
+|<img src="gifs/animate_step_iteration_100_alpha_300_random.gif" width="400" />|<img src="gifs/animate_step_iteration_100.gif" width="400" />|
