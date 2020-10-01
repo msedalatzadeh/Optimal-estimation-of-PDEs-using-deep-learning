@@ -1,5 +1,7 @@
-# Optimal Predictor Design
-This repository contains codes and reuslts for optimal estimation of heat equation by means of shape optimization and neural networks. Consider a one-dimensional steal bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t>0$. The changes in the temperature is governed by the equation:
+# Optimal Predictor Desgin using CNN and Shape Optimization
+This repository contains codes and results for optimal estimation of heat equation by means of shape optimization and neural networks. 
+
+Consider a one-dimensional heat-conductive bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t>0$. The changes in the temperature is governed by the equation:
 
 
 \begin{equation}
@@ -33,50 +35,28 @@ For the specified parameters and the following initial condition $u(x,0)=u_0\sin
 ```cmd
 >> .\forward_sim.py
 ```
-The output for these parameters is 
-
-<p align="center">
-<img src="gifs/forward-sim.gif" width="400" />
-</p>
 
 ## Neural-Network Estimator
 A neural-network estimator is trained from some set of initial conditions to estimate the solution of the heat equation for any arbitrary initial condition. The set of initial conditions selected for training is
 
-$$
+\begin{equation}
 u_0(x)=16x^2(x-1)^2\sin(\pi\omega x)
-$$
+\begin{equation}
 
-where $\omega$ is changed from `1` to `N` to create new training sample. 
-
-Training data are stored in `input.npy`. The input is an array with the shape `(m,c+1)` where `m=N*r` is the number of training data. In each column, an initial condition is followed by a number indicating a time at which the output is calculated.  The output is an array stored in `output.npy`. Let `u` be the solution to the heat equation with initial condition `u0` at time `t[s]`.
-
-```python
-input = zeros((m,c+1))
-output = zeros((m,c))
-
-def IC(x,omega,u_max):
-    u = 16*u_max*(x**2)*((x-1)**2)*sin(omega*pi*x)
-    return u
-
-n=0
-for omega in range(1,N+1):
-    u0 = array([IC(x,omega,u_max) for x in X])
-    u = FTCS(dt, dx, t_max, x_max, k, u0)
-    for s in range(0,r):
-        input[n,0:c] = u0
-        input[n,c] = t[s] 
-        output[n,:] = u[s,:]
-        n = n+1
-```
-The training inputs are illustrated in the following figure.
+where $\omega$ is changed from `1` to `N` to create new training sample. The training inputs are illustrated in the following figure.
 <p align="center">
 <img src="figs/training-u0-sinusodial.png" width="400" />
 </p>
 
-We use a sequential model in Keras library of TensorFlow to build an estimator. The estimator is indicated by `model` and is consitruced in four steps as follows. 
+Use the function `generate_data()` to create training data. Training data are also stored in the external files `input.npy` and `output.npy`. 
 
-### 1. Defining the Layers
-First, a sequential model is defined using the comand `tensorflow.keras.Sequential`. Layers are added afterwards one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
+
+## Building a model
+We build a model using `keras` library of `tensorFlow`. The estimator is indicated by `model` and is consitruced in steps as follows. 
+
+### 1. Choosing Layers 
+#### Sequential Layer
+A sequential layer is defined using the comand `tensorflow.keras.Sequential`. Layers are added one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
 
 ```python
 model = Sequential()
@@ -86,110 +66,13 @@ model.add(Dense(1000, activation='selu'))
 model.add(Dense(500, activation='selu'))
 model.add(Dense(c, activation='selu'))
 ```
-The architecture of the model is as follows
+The architecture of this model is as follows
 
 <p align="center">
 <img src="figs/model-plot.png" alt="drawing" width="300"/>
 </p>
 
-### 2. Choosing the Comipiler
-Optimization method, loss function, and performance metrics are chosen in this step.
-```python
-model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
-```
-
-### 3. Training the Model
-Sample data are fed to the model to train it. The data are divided into epochs and each spoch is further divided into batches.
-
-```python
-model.fit(input, output, epochs=1, batch_size=m)
-```
-
-
-### 4. Evaluating the Performance
-We use some test data to evaluate the performance of the trained model. This includes feeding some sample input and output to the model and calculate the loss and performance metric.
-
-```python
-eval_result = model.evaluate(u0, u_real.reshape((1,c,r)), batch_size=1)
-print('evaluation result, [loss, accuracy]=' , eval_result)
-```
-
-## Estimation (i.e. Making Predictions)
-For the time being, we assume $x_1=0$ and $x_2=1$. Estimation is
-
-```python
-u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
-```
-
-### Choice of activation function
-An activation function can be chosen in each layer. An activation function should reflect the original mathematical model. In what follows, we will compare the following activation functions.
-
-|`elu`|`tanh`|`relu`|
-|-----|------|------|
-|<img src="gifs/real-prediction-elu.gif" width="400" />|<img src="gifs/real-prediction-tanh.gif" width="400" />|<img src="gifs/real-prediction-relu.gif" width="400" />|
-
-### Choice of optimizer
-The activation function is fixed to `selu`.
-
-|`Adadelta`|`SGD`|`RMSprop`|
-|-----|------|------|
-|<img src="gifs/real-prediction-selu-Adadelta.gif" width="400" />|<img src="gifs/real-prediction-selu-SGD.gif" width="400" />|<img src="gifs/real-prediction-selu-RMSprop.gif" width="400" />|
-
-### Choice of loss function
-The activation function and optimizer are fixed to `selu` and `Adam`, respectively.
-
-|`mean_squared_error`|`huber_loss`|`mean_squared_logarithmic_error`|
-|-----|------|------|
-|<img src="gifs/real-prediction-selu-Adam-mean_squared_error.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-huber_loss.gif" width="400" />|<img src="gifs/real-prediction-selu-Adam-mean_squared_logarithmic_error.gif" width="400" />|
-
-### Changing Initial Conditions 
-For the activation function `selu`, optimizer `Adam`, loss function `huber_loss`, different initial conditions are tested to observe the performance of the estimator.
-
-|$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
-|-----|------|------|
-|<img src="gifs/IC1.gif" width="400" />|<img src="gifs/IC2.gif" width="400" />|<img src="gifs/IC3.gif" width="400" />|
-
-### Random Training Data
-We also use random initial conditions to train the model. The random training data includes initial conditions generated with the following code
-
-```python
-# Random Initial Conditions
-from random import sample, choices
-m = N*r    # number of input data
-input = zeros((m,c+1))
-output = zeros((m,c))
-
-m = int(x_max/dx/5)
-n = 0
-for itr in range(0,N):
-    rand_location = sample(range(2,c-2), k = m)
-    rand_temperature = choices(list(chain(range(-u_max, 0), range(1, u_max+1))), k = m)
-
-    u0 = zeros(c+1)
-    for i in range(0,m):
-        u0[rand_location[i]] = rand_temperature[i]
-
-    plt.plot(X, u0[0:c])
-    u = FTCS(dt, dx, t_max, x_max, k, u0[0:c])
-    for s in range(0,r):
-        u0[c] = t[s]
-        input[n,:] = u0
-        output[n,:] = u[s,:]
-        n = n+1
-```
-These initial conditions are depicted in the next figure
-
-<p align="center">
-<img src="figs/training-u0-random.png" width="400" />
-</p>
-
-The response of the model trained with random initial conditions are shown in the next table
-
-|$u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2$|$u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2$|
-|-----|------|------|
-|<img src="gifs/IC1-random_data.gif" width="400" />|<img src="gifs/IC2-random_data.gif" width="400" />|<img src="gifs/IC3-random_data.gif" width="400" />|
-
-## RNN Layer
+#### RNN Layer
 An RNN layer is a recurrent neural network in which the output is fed back to the network. A schematic of the network is depicted below
 
 |  RNN schematic | current architecture|
@@ -206,11 +89,9 @@ model = Sequential([
 
 The following is the simulation result for an RNN predictor
 
-<p align="center">
-<img src="gifs/IC1-test_type4-36modes.gif" width="400" />
-</p>
+<img src="gifs/IC1-test_type4-25modes.gif" width="400" />
 
-## CNN Layer
+#### CNN Layer
 A CNN layer applies various filters to a time series and yields a time series width shorter with depending on the size of its filter. A schematic of the network is depicted below
 
 |  CNN schematic | current architecture|
@@ -226,9 +107,153 @@ model = Sequential([
 ```
 The following is the simulation result for a CNN predictor
 
-<p align="center">
-<img src="gifs/IC1-test_type3-5modes.gif" width="400" />
-</p>
+<img src="gifs/IC1-test_type3-25modes.gif" width="400" />
+
+
+### 2. Choosing the Compiler
+Optimization method, loss function, and performance metrics are chosen in this step.
+```python
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
+```
+
+### 3. Training the Model
+Sample data are fed to the model to train it. The data are divided into epochs and each epoch is further divided into batches.
+
+```python
+model.fit(input, output, epochs=1, batch_size=m)
+```
+
+### 4. Evaluating the Performance
+We use some test data to evaluate the performance of the trained model. This includes feeding some sample input and output to the model and calculate the loss and performance metric.
+
+```python
+eval_result = model.evaluate(u0, u_real.reshape((1,c,r)), batch_size=1)
+print('evaluation result, [loss, accuracy]=' , eval_result)
+```
+
+### 5. Estimation (i.e. Making Predictions)
+For the time being, we assume $x_1=0$ and $x_2=1$. Estimation is
+
+```python
+u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
+```
+
+An activation function can be chosen in each layer. An activation function should reflect the original mathematical model. Optimizer and loss fuctions are to be chosen as well.
+
+Different initial conditions are tested to observe the performance of the estimator. We have cosidered the follwing initial conditions:
+
+\begin{equation}
+\begin{cases}
+u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2\\
+u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2\\
+u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2\\
+\lbrace 0, 0\le x \le 0.5, 1, 0.5 < x\le 1\rbrace
+\end{cases}
+\end{equation}
 
 ## Shape Optimization
-In this section, the input to the estimator will only be an initial condition over a subset $\omega \subset [0,1]$ 
+Let $\omega \subset [0,1]$ indicate the sensor shape, and $u_r$ be the real solution to the heat equation and $u_p$ be the prediction. Consider the following linear-quadratic cost function:
+
+\begin{equation}
+J(\omega) = \alpha|\omega|+ \int_0^\tau \int_0^1 (u_p(x,t;\omega)-u_r(x,t))^2 dx dt.
+\end{eqaution}
+
+Remember that a neural-network estimator is a nonlinear map that maps the solution at each time snap to the next time snap:
+
+\begin{equation}
+u_p(x,t_{n+1};\omega) = f_{\omega}(\chi_\omega(x)u_r(x,t_n)),
+\end{equation}
+
+where $\chi_{\omega}(x)$ is a characteristic function indicating the sensor region. 
+
+The derivative of $J(\omega)$ with respect to $\omega$ is
+
+\begin{equation}
+J'(\omega) = \alpha+ 2 \int_0^\tau \int_0^1 u'_p(x,t;\omega)(u_p(x,t;\omega)-u_r(x,t)) dx dt.
+\end{equation}
+
+The function $u'_p(x,t;\omega)$ is the derivative of $u_p(x,t;\omega)$ with respect parameter $\omega$. This derivative is
+
+\begin{equation}
+u'_p(x,t_{n+1};\omega) = \chi'_\omega(x)f'_{\omega}(\chi_\omega u_r(x,t_n))+df_{\omega}(\chi_\omega u_r(x,t_n))
+\end{equation}
+
+The function $f'_{\omega}(\cdot)$ is the gradient of the network with respect to its input, and $df_{\omega}(\cdot)$ is the gradient of the network with respect to sensor locations. Also, the function $\chi'_{\omega}(x)$ is the derivative of $\chi_\omega(x)$ with respect to sensor location $\omega$. As a result, the gradient of the cost function with respect to sensor location is 
+
+\begin{equation}
+J'(\omega) = \alpha + 2 \int_0^{\tau} \int_0^1  \left(\chi'_\omega(x)f'(\chi_\omega(x) u_r(x,t))+df_{\omega}(\chi_\omega u_r(x,t_n))\right)(u_p(x,t;\omega)-u_r(x,t)) dx dt.
+\end{equation}
+
+We are interested in the discrete implementation of sensor shape optimization. In this implementation, we interpret $\omega$ as a vector with as many entries as the vector $x$. Each entry is the probability of sensor presence at each node. As an example, $\omega = [0.5,0.1,...,1]$ shows that the probability of sensor presence at the first node is 0.5, at the second node is 0.1, and so on. The characteristic function $\chi_{\omega}(x)$ is then the `diag` operation on `omega`. So, the term $\chi_\omega(x)u_r(x,t_n)$ is replaced with the matrix multiplication `diag(omega)*u_real`. Also, the derivative $\chi'_{\omega}(x)$ is the derivative with respect to each probability of sensor presence. For instance, the derivative with respect to probability of sensor at node 1 is `diag([1,0,0,...,0])`.  It is assumed that the gradient of the newrok with respect to omega is negligible.
+
+### shape_optimizer.py
+Use the python function `LQ_cost(u_pred,model,omega)` to calculate the cost.
+
+```python
+def LQ_cost(omega):
+
+    omega_ = [i for i, value in enumerate(omega) if value < 0.5]
+
+    input = array(training_data[0])
+    input[:,omega_] = 0
+    output = array(training_data[1])
+
+    model.fit(input, output, batch_size=1000, epochs=4,verbose=0)
+
+    u_pred = model.predict(matmul(u_real,diag(omega)))
+    cost = (u_pred - u_real)**2
+    cost = trapz(trapz(cost, dx=dx), dx=dt) 
+    cost += 350*sum(omega) #(c-len(omega_))
+    
+    return cost
+```
+
+Keras uses the method `keras.backend.gradients` for calculating the gradient.  Use the python function `LQ_grad(omega)` to calculate the gradient
+
+```python
+def LQ_grad(omega):
+
+    u_pred = model.predict(matmul(u_real,diag(omega)))
+
+    grads = K.gradients(model.output, model.input)[0]
+    gradient = K.function(model.input, grads)
+    g = gradient(matmul(u_real,diag(omega)))
+
+    D = 2*g*(u_pred-u_real)
+     
+    grad = zeros(c)
+    for i in range(0,c):
+        int = D[:,i]
+        grad[i] = trapz(int, dx=dt) + 350
+    
+    return grad
+```
+
+The optimal actuator shape is then obtained by running the code
+
+```python
+res = minimize(LQ_cost,omega_0,method='trust-constr',
+           jac=LQ_grad,
+           bounds=bounds,
+           options={'verbose': 1, 'maxiter': 100, 'disp': True},
+           callback=callback_cost)
+```
+
+Use the function `animate(u_real,model,omega,FileName)` to illustrate the performance of the estimator and save the result.
+
+
+|  Time evolution for optimal sensor arrangement | Cost vs iterations |
+|----------------|---------------------|
+|<img src="gifs/animate_step_iteration_100.gif" width="400" />|<img src="figs/cost_step_iteration_100.png" width="400" />|
+|<img src="gifs/animate_IC1_iteration_100.gif" width="400" />|<img src="figs/cost_IC1_iteration_100.png" width="400" />|
+|<img src="gifs/animate_IC2_iteration_100.gif" width="400" />|<img src="figs/cost_IC2_iteration_100.png" width="400" />|
+|<img src="gifs/animate_IC3_iteration_100.gif" width="400" />|<img src="figs/cost_IC3_iteration_100.png" width="400" />|
+
+
+|  Time evolution when $\alpha=50$ | Time evolution when $\alpha=500$ |
+|----------------|---------------------|
+|<img src="gifs/animate_step_iteration_100_alpha_50.gif" width="400" />|<img src="gifs/animate_step_iteration_100_alpha_500.gif" width="400" />|
+
+|  Time evolution when $\omega_0$ is random | Time evolution when $\omega_0$ is zero array|
+|----------------|---------------------|
+|<img src="gifs/animate_step_iteration_100_alpha_300_random.gif" width="400" />|<img src="gifs/animate_step_iteration_100_alpha_300_zero.gif" width="400" />|
