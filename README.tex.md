@@ -41,7 +41,7 @@ A neural-network estimator is trained from some set of initial conditions to est
 
 \begin{equation}
 u_0(x)=16x^2(x-1)^2\sin(\pi\omega x)
-\begin{equation}
+\end{equation}
 
 where $\omega$ is changed from `1` to `N` to create new training sample. The training inputs are illustrated in the following figure.
 <p align="center">
