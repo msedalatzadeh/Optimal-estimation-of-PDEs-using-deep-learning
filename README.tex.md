@@ -4,13 +4,13 @@ This repository contains codes and results for optimal estimation of heat equati
 Consider a one-dimensional heat-conductive bar over the interval $[0,\ell]$. Let $u(x,t)$ be the temperature of the bar at location $x\in [0,1]$ and time $t>0$. The changes in the temperature is governed by the equation:
 
 
-\begin{equation}
+\begin{equation*}
 \begin{cases}
 u_{t}(x,t)=ku_{xx}(x,t),\\
 u_x(0,t)=u_x(\ell,t)=0,\\
 u(x,0)=u_0(x).
 \end{cases}
-\end{equation}
+\end{equation*}
 
 
 ## Forward simulation
@@ -39,9 +39,9 @@ For the specified parameters and the following initial condition $u(x,0)=u_0\sin
 ## Neural-Network Estimator
 A neural-network estimator is trained from some set of initial conditions to estimate the solution of the heat equation for any arbitrary initial condition. The set of initial conditions selected for training is
 
-\begin{equation}
+\begin{equation*}
 u_0(x)=16x^2(x-1)^2\sin(\pi\omega x)
-\end{equation}
+\end{equation*}
 
 where $\omega$ is changed from `1` to `N` to create new training sample. The training inputs are illustrated in the following figure.
 <p align="center">
@@ -142,47 +142,47 @@ An activation function can be chosen in each layer. An activation function shoul
 
 Different initial conditions are tested to observe the performance of the estimator. We have cosidered the follwing initial conditions:
 
-\begin{equation}
+\begin{equation*}
 \begin{cases}
 u_0(x)=x^2(x-1)^2(x-\frac{1}{2})^2\\
 u_0(x)=x^2(x-1)^2(x+\frac{1}{2})^2\\
 u_0(x)=x^2(x-1)^2(x-\frac{1}{4})^2\\
 \lbrace 0, 0\le x \le 0.5, 1, 0.5 < x\le 1\rbrace
 \end{cases}
-\end{equation}
+\end{equation*}
 
 ## Shape Optimization
 Let $\omega \subset [0,1]$ indicate the sensor shape, and $u_r$ be the real solution to the heat equation and $u_p$ be the prediction. Consider the following linear-quadratic cost function:
 
-\begin{equation}
+\begin{equation*}
 J(\omega) = \alpha|\omega|+ \int_0^\tau \int_0^1 (u_p(x,t;\omega)-u_r(x,t))^2 dx dt.
 \end{eqaution}
 
 Remember that a neural-network estimator is a nonlinear map that maps the solution at each time snap to the next time snap:
 
-\begin{equation}
+\begin{equation*}
 u_p(x,t_{n+1};\omega) = f_{\omega}(\chi_\omega(x)u_r(x,t_n)),
-\end{equation}
+\end{equation*}
 
 where $\chi_{\omega}(x)$ is a characteristic function indicating the sensor region. 
 
 The derivative of $J(\omega)$ with respect to $\omega$ is
 
-\begin{equation}
+\begin{equation*}
 J'(\omega) = \alpha+ 2 \int_0^\tau \int_0^1 u'_p(x,t;\omega)(u_p(x,t;\omega)-u_r(x,t)) dx dt.
-\end{equation}
+\end{equation*}
 
 The function $u'_p(x,t;\omega)$ is the derivative of $u_p(x,t;\omega)$ with respect parameter $\omega$. This derivative is
 
-\begin{equation}
+\begin{equation*}
 u'_p(x,t_{n+1};\omega) = \chi'_\omega(x)f'_{\omega}(\chi_\omega u_r(x,t_n))+df_{\omega}(\chi_\omega u_r(x,t_n))
-\end{equation}
+\end{equation*}
 
 The function $f'_{\omega}(\cdot)$ is the gradient of the network with respect to its input, and $df_{\omega}(\cdot)$ is the gradient of the network with respect to sensor locations. Also, the function $\chi'_{\omega}(x)$ is the derivative of $\chi_\omega(x)$ with respect to sensor location $\omega$. As a result, the gradient of the cost function with respect to sensor location is 
 
-\begin{equation}
+\begin{equation*}
 J'(\omega) = \alpha + 2 \int_0^{\tau} \int_0^1  \left(\chi'_\omega(x)f'(\chi_\omega(x) u_r(x,t))+df_{\omega}(\chi_\omega u_r(x,t_n))\right)(u_p(x,t;\omega)-u_r(x,t)) dx dt.
-\end{equation}
+\end{equation*}
 
 We are interested in the discrete implementation of sensor shape optimization. In this implementation, we interpret $\omega$ as a vector with as many entries as the vector $x$. Each entry is the probability of sensor presence at each node. As an example, $\omega = [0.5,0.1,...,1]$ shows that the probability of sensor presence at the first node is 0.5, at the second node is 0.1, and so on. The characteristic function $\chi_{\omega}(x)$ is then the `diag` operation on `omega`. So, the term $\chi_\omega(x)u_r(x,t_n)$ is replaced with the matrix multiplication `diag(omega)*u_real`. Also, the derivative $\chi'_{\omega}(x)$ is the derivative with respect to each probability of sensor presence. For instance, the derivative with respect to probability of sensor at node 1 is `diag([1,0,0,...,0])`.  It is assumed that the gradient of the newrok with respect to omega is negligible.
 
