@@ -1,4 +1,4 @@
-# Optimal Predictor Desgin using CNN and Shape Optimization
+# Optimal Estimator Desgin
 This repository contains codes and results for optimal estimation of heat equation by means of shape optimization and neural networks. 
 
 Consider a one-dimensional heat-conductive bar over the interval <img src="/tex/8250e61c2154c3ca2d3f307958bfd9dd.svg?invert_in_darkmode&sanitize=true" align=middle width=31.50690839999999pt height=24.65753399999998pt/>. Let <img src="/tex/9a1205e73049dcbe49e500982405ce76.svg?invert_in_darkmode&sanitize=true" align=middle width=44.832674699999984pt height=24.65753399999998pt/> be the temperature of the bar at location <img src="/tex/b22db4945452a857d35a63a3f0ea5066.svg?invert_in_darkmode&sanitize=true" align=middle width=62.362875299999985pt height=24.65753399999998pt/> and time <img src="/tex/ec2b6a3dd78e3d7ba87ab5db40c09436.svg?invert_in_darkmode&sanitize=true" align=middle width=36.07293689999999pt height=21.18721440000001pt/>. The changes in the temperature is governed by the equation:
@@ -33,7 +33,108 @@ For the specified parameters and the following initial condition <img src="/tex/
 ## Neural-Network Estimator
 A neural-network estimator is trained from some set of initial conditions to estimate the solution of the heat equation for any arbitrary initial condition. The set of initial conditions selected for training is
 
-<p align="center"><img src="/tex/cace3ae276edb6a2e3af0fff116cf171.svg?invert_in_darkmode&sanitize=true" align=middle width=948.9338429999999pt height=1084.0112943pt/></p>
+<p align="center"><img src="/tex/5a45ec568fc93e1192d80734151cb006.svg?invert_in_darkmode&sanitize=true" align=middle width=459.0572613pt height=18.312383099999998pt/></p>
+
+where <img src="/tex/ae4fb5973f393577570881fc24fc2054.svg?invert_in_darkmode&sanitize=true" align=middle width=10.82192594999999pt height=14.15524440000002pt/> is changed from `1` to `N` to create new training sample. The training inputs are illustrated in the following figure.
+<p align="center">
+<img src="figs/training-u0-sinusodial.png" width="400" />
+</p>
+
+Use the function `generate_data()` to create training data. Training data are also stored in the external files `input.npy` and `output.npy`. 
+
+
+## Building a model
+We build a model using `keras` library of `tensorFlow`. The estimator is indicated by `model` and is consitruced in steps as follows. 
+
+### 1. Choosing Layers 
+#### Sequential Layer
+A sequential layer is defined using the comand `tensorflow.keras.Sequential`. Layers are added one by one using the command `model.add`. Three layers are often present: Input Layer, Dense Layer, Output Layer. 
+
+```python
+model = Sequential()
+model.add(Dense(100, input_dim = c1, activation='selu'))
+model.add(Dense(500, activation='selu'))
+model.add(Dense(1000, activation='selu'))
+model.add(Dense(500, activation='selu'))
+model.add(Dense(c, activation='selu'))
+```
+The architecture of this model is as follows
+
+<p align="center">
+<img src="figs/model-plot.png" alt="drawing" width="300"/>
+</p>
+
+#### RNN Layer
+An RNN layer is a recurrent neural network in which the output is fed back to the network. A schematic of the network is depicted below
+
+|  RNN schematic | current architecture|
+|----------------|---------------------|
+|<img src="pics/RNN.png" width="400" />|<img src="figs/RNN-model_plot.png" width="400" />|
+
+To add a recurrent layer to a sequential model in keras, the layer `SimpleRNN` is used.
+
+```python
+model = Sequential([
+    SimpleRNN(c, activation=act_function, return_sequences=True, input_shape=[None, cl])
+    ])
+```
+
+The following is the simulation result for an RNN predictor
+
+<img src="gifs/IC1-test_type4-25modes.gif" width="400" />
+
+#### CNN Layer
+A CNN layer applies various filters to a time series and yields a time series width shorter with depending on the size of its filter. A schematic of the network is depicted below
+
+|  CNN schematic | current architecture|
+|----------------|---------------------|
+|<img src="pics/CNN.png" width="400" />|<img src="figs/CNN-model_plot.png" width="400" />|
+
+To add a 1D convolutional layer to a sequential model in keras, `Conv1D` is used as follows
+```python
+model = Sequential([
+    Conv1D(filters=c, activation=act_function, kernel_size=cl,
+     strides=1, padding="same", input_shape=(1, cl))
+     ])
+```
+The following is the simulation result for a CNN predictor
+
+<img src="gifs/IC1-test_type3-25modes.gif" width="400" />
+
+
+### 2. Choosing the Compiler
+Optimization method, loss function, and performance metrics are chosen in this step.
+```python
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
+```
+
+### 3. Training the Model
+Sample data are fed to the model to train it. The data are divided into epochs and each epoch is further divided into batches.
+
+```python
+model.fit(input, output, epochs=1, batch_size=m)
+```
+
+### 4. Evaluating the Performance
+We use some test data to evaluate the performance of the trained model. This includes feeding some sample input and output to the model and calculate the loss and performance metric.
+
+```python
+eval_result = model.evaluate(u0, u_real.reshape((1,c,r)), batch_size=1)
+print('evaluation result, [loss, accuracy]=' , eval_result)
+```
+
+### 5. Estimation (i.e. Making Predictions)
+For the time being, we assume <img src="/tex/eda2a562d55167366125e1c21f91e901.svg?invert_in_darkmode&sanitize=true" align=middle width=46.90628744999999pt height=21.18721440000001pt/> and <img src="/tex/4b21b432d676862d1eb707965d12e987.svg?invert_in_darkmode&sanitize=true" align=middle width=46.90628744999999pt height=21.18721440000001pt/>. Estimation is
+
+```python
+u_pred=model.predict(np.asarray(u0).reshape((1,c)), batch_size=1)
+```
+
+An activation function can be chosen in each layer. An activation function should reflect the original mathematical model. Optimizer and loss fuctions are to be chosen as well.
+
+Different initial conditions are tested to observe the performance of the estimator. We have cosidered the follwing initial conditions:
+
+<p align="center"><img src="/tex/2021cc7d731385f91c9fd02a62e8aacc.svg?invert_in_darkmode&sanitize=true" align=middle width=476.49971325pt height=89.044395pt/></p>
 
 ## Shape Optimization
 Let <img src="/tex/7f0df74987aef0c61a80a8b3c9abe4f5.svg?invert_in_darkmode&sanitize=true" align=middle width=65.61628755pt height=24.65753399999998pt/> indicate the sensor shape, and <img src="/tex/bb0eabc300d2b8c9440794da293c2bcf.svg?invert_in_darkmode&sanitize=true" align=middle width=15.867721649999991pt height=14.15524440000002pt/> be the real solution to the heat equation and <img src="/tex/b8d349ed77e433ecbf753e95fa797022.svg?invert_in_darkmode&sanitize=true" align=middle width=16.18675079999999pt height=14.15524440000002pt/> be the prediction. Consider the following linear-quadratic cost function:
