@@ -230,4 +230,4 @@ Use the function `animate(u_real,model,omega,FileName)` to illustrate the perfor
 |<img src="gifs/animate_step_iteration_100_alpha_300_random.gif" width="400" />|<img src="gifs/animate_step_iteration_100.gif" width="400" />|
 
 ## References
-[1] M.S. Edalatzadeh and R. Herzog, "Optimal Prediction using Learning and Shape Optimization", arXiv:2105.05404.
+[1] **M.S. Edalatzadeh** and R. Herzog, "Optimal Prediction using Learning and Shape Optimization", arXiv:2105.05404.
