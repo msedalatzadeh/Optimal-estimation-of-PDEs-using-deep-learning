@@ -228,3 +228,6 @@ Use the function `animate(u_real,model,omega,FileName)` to illustrate the perfor
 |  Time evolution when <img src="/tex/747fe3195e03356f846880df2514b93e.svg?invert_in_darkmode&sanitize=true" align=middle width=16.78467779999999pt height=14.15524440000002pt/> is random | Time evolution when <img src="/tex/747fe3195e03356f846880df2514b93e.svg?invert_in_darkmode&sanitize=true" align=middle width=16.78467779999999pt height=14.15524440000002pt/> is zero array|
 |----------------|---------------------|
 |<img src="gifs/animate_step_iteration_100_alpha_300_random.gif" width="400" />|<img src="gifs/animate_step_iteration_100.gif" width="400" />|
+
+## References
+[1] M.S. Edalatzadeh and R. Herzog, "Optimal Prediction using Learning and Shape Optimization", arXiv:2105.05404.
